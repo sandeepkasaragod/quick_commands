@@ -3,3 +3,6 @@ ls -lh <dir> | cut -d ' ' -f 11 | cut -d '_' -f 1 | awk NF
 
 Rsync
 rsync -r -h  <source> <destination>
+
+Delete line using vim example deleting 95N 
+g/[0-9]N/d
