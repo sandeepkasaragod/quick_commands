@@ -6,3 +6,6 @@ rsync -r -h  <source> <destination>
 
 Delete line using vim example deleting 95N 
 g/[0-9]N/d
+
+remove empty lines vim
+g/^$/d
