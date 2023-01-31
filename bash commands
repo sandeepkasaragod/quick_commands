@@ -9,3 +9,7 @@ g/[0-9]N/d
 
 remove empty lines vim
 g/^$/d
+
+
+activate conda dir
+export PATH=$HOME/miniconda3/bin:$PATH
