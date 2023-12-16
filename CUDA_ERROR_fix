@@ -1,0 +1,5 @@
+# CUDA unknown error
+https://github.com/pytorch/pytorch/issues/49081
+
+Installing below command can fix such problems
+apt-get install nvidia-modprobe
