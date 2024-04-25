@@ -22,3 +22,7 @@ conda config --set channel_priority strict
 
 #get depend... packages
 conda info --all artic
+
+
+mysql windows fixes
+https://stackoverflow.com/questions/51448958/mysql-server-8-0-keyring-migration-error-at-login
