@@ -26,3 +26,6 @@ conda info --all artic
 
 mysql windows fixes
 https://stackoverflow.com/questions/51448958/mysql-server-8-0-keyring-migration-error-at-login
+
+#Running java with sdk
+java --module-path ~/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml -jar ~/IdeaProjects/Glue_02052024/out/artifacts/Glue_jar/Glue.jar
