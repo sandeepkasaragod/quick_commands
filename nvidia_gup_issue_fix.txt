@@ -1,0 +1,34 @@
+1768  nvidia-smi
+ 1769  sudo apt update
+ 1770  wget -O- https://cdn.oxfordnanoportal.com/apt/ont-repo.pub | sudo apt-key add -
+ 1771  echo "deb http://cdn.oxfordnanoportal.com/apt focal-stable non-free" | sudo tee /etc/apt/sources.list.d/nanoporetech.sources.list
+ 1772  nividia-smi
+ 1773  nvidia-smi
+ 1774  nvcc --version
+ 1775  sudo apt install nvidia-cuda-toolkit
+ 1776  sudo apt-get update
+ 1777  sudo apt install nvidia-cuda-toolkit
+ 1778  nvcc --version
+ 1779  nvidia-smi
+ 1780  clear
+ 1781  conda activate rampart
+ 1782  conda activate artic-rampart
+ 1783  ls
+ 1784  rampart --version
+ 1785  ls
+ 1786  cd r*
+ 1787  cd RA
+ 1788  cd Rampart_Output/
+ 1789  ld
+ 1790  ls
+ 1791  mkdir abuja_workshop
+ 1792  ls
+ 1793  cd abuja_workshop/
+ 1794  rampart --pr
+ 1795  conda activate artic-rampart
+ 1796  rampart --version
+ 1797  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol' --basecalledDir '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' 
+ 1798  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol' --basecalledPath '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' 
+ 1799  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol/rabv_ea' --basecalledPath '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' 
+ 1800  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol/rabv_ea' --basecalledPath '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' --clearAnnotated
+
