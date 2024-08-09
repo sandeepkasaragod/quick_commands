@@ -32,3 +32,6 @@
  1799  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol/rabv_ea' --basecalledPath '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' 
  1800  rampart --protocol '/home/essel/Documents/GitHub/artic-rabv/rampart/tza_protocol/rabv_ea' --basecalledPath '/var/lib/minknow/data/abuja_workshop/no_sample/20240214_1530_MN30183_FAY66393_b1932526/fastq_pass' --clearAnnotated
 
+
+https://www.enablegeek.com/blog/setting-up-cuda-and-cudnn-on-ubuntu-20-04/
+
