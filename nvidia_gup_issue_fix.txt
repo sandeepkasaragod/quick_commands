@@ -11,7 +11,7 @@
  1778  nvcc --version
  1779  nvidia-smi
  1780  clear
- 1781  conda activate rampart
+ 1781  conda activate ramparthttps://stackoverflow.com/questions/36279045/where-did-cuda-get-installed-on-ubuntu-14-04-on-my-computer
  1782  conda activate artic-rampart
  1783  ls
  1784  rampart --version
@@ -34,4 +34,8 @@
 
 
 https://www.enablegeek.com/blog/setting-up-cuda-and-cudnn-on-ubuntu-20-04/
+
+https://stackoverflow.com/questions/36279045/where-did-cuda-get-installed-on-ubuntu-14-04-on-my-computer
+
+
 
