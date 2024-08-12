@@ -39,3 +39,27 @@ https://stackoverflow.com/questions/36279045/where-did-cuda-get-installed-on-ubu
 
 
 
+
+1910  sudo apt update
+ 1911  sudo add-apt-repository ppa:graphics-drivers/ppa
+ 1912  sudo apt update
+ 1913  sudo apt install nvidia-driver-470
+ 1914  nvidia-smi
+ 1915  sudo reboot
+ 1916  nvidia-smi
+ 1917  nvcc --version
+ 1918  sudo apt install nvidia-cuda-toolkit
+ 1919  nvcc --version
+ 1920  locate nvcc .
+ 1921  locate nvcc 
+ 1922  clear
+ 1923  locate nvcc 
+ 1924  ln -s /usr/lib/nvidia-cuda-toolkit/ /usr/local/cuda
+ 1925  sudo ln -s /usr/lib/nvidia-cuda-toolkit/ /usr/local/cuda
+ 1926  vim ~/.bashrc 
+ 1927  source ~/.bashrc #
+ 1928  source ~/.bashrc
+
+
+
+
