@@ -1,1 +1,150 @@
 
+    public void loadDBForLinux() throws IOException {
+        loadModule.getItems().clear();
+        loadModule.getItems().addAll("maxLikeHoodGenotyper", "genBankSubmission");
+        //Map<String, String> fileCheck = checkConfigFile(globalVariables.pwd + "/" + globalVariables.configFile);
+        List<String> proj_list = readProjectFile(globalVariables.pwd + "/" + globalVariables.configDir +
+                "/" + "Projects.txt");
+        //List<String> dataList = Arrays.asList(projectArray);
+
+        final String[] projs_list = {
+                "rabv",
+                "flue",
+                "cov"
+        };
+
+        List<String> command = new ArrayList<>();
+        String draftCommand = "java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase; // Replace with the command you want to execute
+
+        command.add("/bin/bash");
+        command.add("-c");
+        command.add(draftCommand);
+        System.out.println("testing command");
+        System.out.println(draftCommand);
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        processBuilder.redirectErrorStream(true);
+
+        Process process = processBuilder.start();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        StringBuilder output = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            output.append(line + "\n");
+        }
+        cmdOutput.setText(output.toString());
+
+        for (String item : proj_list) {
+            if (output.toString().contains(item)) {
+                System.out.println(item);
+                loadPrj.getItems().add(item);
+            }
+        }
+        if (loadPrj.getItems().isEmpty()) {
+            if (output.toString().contains("DatabaseConfiguration WARNING")) {
+                cmdOutput.setText("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+                GlobalFileLogger.getInstance("application.log").write("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+            }
+        }
+    }
+
+    public void loadDBForMac() throws IOException {
+        //loadModules();
+        loadModule.getItems().clear();
+        loadModule.getItems().addAll("maxLikeHoodGenotyper", "genBankSubmission");
+        //Map<String, String> fileCheck = checkConfigFile(globalVariables.pwd + "/" + globalVariables.configFile);
+        List<String> proj_list = readProjectFile(globalVariables.pwd + "/" + globalVariables.configDir +
+                "/" + "Projects.txt");
+        //List<String> dataList = Arrays.asList(projectArray);
+
+        final String[] projs_list = {
+                "rabv",
+                "flue",
+                "cov"
+        };
+
+        loadPrj.getItems().clear();
+
+        String command = "java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase; // Replace with the command you want to execute
+        System.out.println(command);
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        StringBuilder output = new StringBuilder();
+
+        while ((line = reader.readLine()) != null) {
+            output.append(line + "\n");
+        }
+        cmdOutput.setText(output.toString());
+
+        for (String item : proj_list) {
+            if (output.toString().contains(item)) {
+                System.out.println(item);
+                loadPrj.getItems().add(item);
+            }
+        }
+        if (loadPrj.getItems().isEmpty()) {
+            if (output.toString().contains("DatabaseConfiguration WARNING")) {
+                cmdOutput.setText("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+                GlobalFileLogger.getInstance("application.log").write("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+            }
+        }
+    }
+
+    @FXML
+    private void loadDB(ActionEvent event) throws IOException {
+        String osType = getOsType();
+        if (osType.equals("Mac")) {
+            loadDBForMac();
+        }
+        else if (osType.equals("Linux")) {
+            loadDBForLinux();
+        }
+        else {
+            alertmsg("Os not supported", "Limited OS support", "This is " + osType + " is not supported currently" , "");
+        }
+        //loadDBForLinux();
+
+        /*
+        //loadModules();
+        loadModule.getItems().clear();
+        loadModule.getItems().addAll("maxLikeHoodGenotyper", "genBankSubmission");
+        //Map<String, String> fileCheck = checkConfigFile(globalVariables.pwd + "/" + globalVariables.configFile);
+        List<String> proj_list = readProjectFile(globalVariables.pwd + "/" + globalVariables.configDir +
+                "/" + "Projects.txt");
+        //List<String> dataList = Arrays.asList(projectArray);
+
+        final String[] projs_list = {
+                "rabv",
+                "flue",
+                "cov"
+        };
+
+        loadPrj.getItems().clear();
+
+        String command = "java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase; // Replace with the command you want to execute
+        System.out.println(command);
+        Process process = Runtime.getRuntime().exec(command);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String line;
+        StringBuilder output = new StringBuilder();
+
+        while ((line = reader.readLine()) != null) {
+            output.append(line + "\n");
+        }
+        cmdOutput.setText(output.toString());
+
+        for (String item : proj_list) {
+            if (output.toString().contains(item)) {
+                System.out.println(item);
+                loadPrj.getItems().add(item);
+            }
+        }
+        if (loadPrj.getItems().isEmpty()) {
+            if (output.toString().contains("DatabaseConfiguration WARNING")) {
+                cmdOutput.setText("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+                GlobalFileLogger.getInstance("application.log").write("Looks like database connection error: To debug, try running\n java -jar " + globalPath.glueFilePath + " -c " + globalPath.glueConfigFilePath + " -i " + commands.loadDataBase);
+            }
+        }  */
+    }
