@@ -523,7 +523,8 @@ public class HelloController {
     private void browseFasta() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Fasta file", ".*.fasta", "*.fa", "*.fna");
+        //FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Fasta file", ".*.fasta", "*.fa", "*.fna");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Fasta files (*.fasta, *.fa, *.fna)", "*.fasta", "*.fa", "*.fna");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
 
@@ -570,7 +571,7 @@ public class HelloController {
     private void browseTabular() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Submission file", ".*.tsv", "*.txt");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Submission file", "*.tsv", "*.txt");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
 
@@ -603,7 +604,7 @@ public class HelloController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Jar file", ".*.jar");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Jar file", "*.jar");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
 
@@ -619,7 +620,7 @@ public class HelloController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("XML file", ".*.xml");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("XML file", "*.xml");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
 
@@ -635,7 +636,7 @@ public class HelloController {
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("SQL file", ".*.sql");
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("SQL file", "*.sql");
         fileChooser.getExtensionFilters().add(filter);
         File file = fileChooser.showOpenDialog(null);
 
