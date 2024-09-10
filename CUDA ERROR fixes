@@ -61,6 +61,20 @@ setup_conda_env() {
 }
 
 
+get_tool_paths() {
+    local tools=("blast" "mafft" "raxml")
+
+    for tool in "${tools[@]}"; do
+        tool_path=$(command -v $tool)
+        if [[ -n "$tool_path" ]]; then
+            echo "$tool is installed at: $tool_path"
+        else
+            echo "$tool is not installed in the conda environment."
+        fi
+    done
+}
+
+
 if [[ "$conda_installed" == "false" ]]; then
     if [[ "$os_type" == "Darwin" && "$architecture" == "arm64" ]]; then
         echo "macOS on ARM architecture detected. Downloading Miniforge for ARM64..."
@@ -86,3 +100,6 @@ if [[ "$conda_installed" == "false" ]]; then
 else
     echo "Skipping installation as Conda is already installed."
 fi
+
+get_tool_paths
+
