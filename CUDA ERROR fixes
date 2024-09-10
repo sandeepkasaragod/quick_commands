@@ -84,5 +84,5 @@ if [[ "$conda_installed" == "false" ]]; then
     setup_conda_env
 
 else
-    echo "Skipping Miniforge installation as Conda is already installed."
+    echo "Skipping installation as Conda is already installed."
 fi
