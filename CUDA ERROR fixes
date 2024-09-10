@@ -61,17 +61,30 @@ setup_conda_env() {
 }
 
 
-get_tool_paths() {
-    local tools=("blast" "mafft" "raxml")
+activate_gluetools_and_get_paths() {
+    # Check if the gluetools environment exists
+    if conda env list | grep -q 'gluetools'; then
+        echo "Activating the gluetools environment."
+        source "$(conda info --base)/etc/profile.d/conda.sh"
+        conda activate gluetools
 
-    for tool in "${tools[@]}"; do
-        tool_path=$(command -v $tool)
-        if [[ -n "$tool_path" ]]; then
-            echo "$tool is installed at: $tool_path"
-        else
-            echo "$tool is not installed in the conda environment."
-        fi
-    done
+        # List the tools to check
+        local tools=("blast" "mafft" "raxml")
+
+        for tool in "${tools[@]}"; do
+            tool_path=$(command -v $tool)
+            if [[ -n "$tool_path" ]]; then
+                echo "$tool is installed at: $tool_path"
+            else
+                echo "$tool is not installed in the gluetools environment."
+            fi
+        done
+
+        # Deactivate the environment after use
+        conda deactivate
+    else
+        echo "The gluetools environment is not found."
+    fi
 }
 
 
@@ -101,5 +114,5 @@ else
     echo "Skipping installation as Conda is already installed."
 fi
 
-get_tool_paths
+activate_gluetools_and_get_paths
 
