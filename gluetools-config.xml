@@ -1,0 +1,86 @@
+<gluetools>
+	<database>
+		<username>gluetools</username>
+		<password>Password123#@!</password>
+		<vendor>MySQL</vendor>
+		<jdbcUrl>jdbc:mysql://localhost:3306/GLUE_TOOLS?characterEncoding=UTF-8</jdbcUrl>	
+	</database>
+	<properties>
+		<!-- BLAST specific config -->
+		<property>
+			<name>gluetools.core.programs.blast.blastn.executable</name>
+			<value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools/bin/blastn</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.blast.tblastn.executable</name>
+			<value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools/bin/tblastn</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.blast.makeblastdb.executable</name>
+			<value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools/bin/makeblastdb</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.blast.temp.dir</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/blastfiles</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.blast.db.dir</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/blastdbs</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.blast.search.threads</name>
+			<value>4</value>
+		</property>
+		<!-- RAxML-specific config -->
+		<property>
+			<name>gluetools.core.programs.raxml.raxmlhpc.executable</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/raXML/raxmlHPC</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.raxml.raxmlhpc.cpus</name>
+			<value>4</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.raxml.temp.dir</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/raxmlfiles</value>
+		</property>
+		<!-- tbl2ans-specific config -->
+		<property>
+      <name>gluetools.core.programs.tbl2asn.executable</name>
+      <!-- <value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools_compiling/bin/tbl2asn</value> --> 
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/mac.table2asn</value>
+    </property>
+		<property>
+      <name>gluetools.core.programs.tbl2asn.temp.dir</name>
+      <value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/tbl2asn</value>
+    </property>
+		<!-- MAFFT-specific config -->
+		<property>
+			<name>gluetools.core.programs.mafft.executable</name>
+			<value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools/bin/mafft</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.mafft.cpus</name>
+			<value>4</value>
+		</property>
+		<property>
+			<name>gluetools.core.programs.mafft.temp.dir</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/mafftfiles</value>
+		</property>
+		<!-- SAM/BAM file processing -->
+		<property>
+			<name>gluetools.core.sam.temp.dir</name>
+			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/samfiles</value>
+		</property>
+		<property>
+			<name>gluetools.core.sam.cpus</name>
+			<value>4</value>
+		</property>
+		<!-- Cayenne -->
+		<property>
+			<name>cayenne.querycache.size</name>
+			<value>30000</value>
+		</property>
+		
+	</properties>
+</gluetools>
