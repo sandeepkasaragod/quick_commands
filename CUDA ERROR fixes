@@ -34,7 +34,7 @@ conda_install() {
 
     # Initialize conda
     source $conda_source
-    echo "Conda installed successfully."
+    conda init
 
     if command -v conda &> /dev/null
     then
