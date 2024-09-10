@@ -44,14 +44,31 @@ conda_install() {
     fi
 }
 
+setup_conda_env() {
+    # Add bioconda and conda-forge channels
+    echo "Adding conda channels: conda-forge, bioconda"
+    conda config --add channels conda-forge
+    conda config --add channels bioconda
+    conda config --add channels defaults
+
+    # Create the conda environment from the YAML file
+    if [[ -f "gluetools.yml" ]]; then
+        echo "Creating conda environment from gluetools.yml"
+        conda env create -f gluetools.yml
+    else
+        echo "Error: gluetools.yml file not found."
+    fi
+}
+
+
 if [[ "$conda_installed" == "false" ]]; then
     if [[ "$os_type" == "Darwin" && "$architecture" == "arm64" ]]; then
         echo "macOS on ARM architecture detected. Downloading Miniforge for ARM64..."
-        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh" "$HOME/miniforge" "$HOME/miniforge/etc/profile.d/conda.sh"
+        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh" "$HOME/miniforge3" "$HOME/miniforge/etc/profile.d/conda.sh"
 
     elif [[ "$os_type" == "Darwin" && "$architecture" == "x86_64" ]]; then
         echo "macOS on x86_64 architecture detected. Downloading Miniforge for x86_64..."
-        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-x86_64.sh" "$HOME/miniforge" "$HOME/miniforge/etc/profile.d/conda.sh"
+        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-x86_64.sh" "$HOME/miniforge3" "$HOME/miniforge/etc/profile.d/conda.sh"
 
     elif [[ "$os_type" == "Linux" && "$architecture" == "x86_64" ]]; then
         echo "Linux on x86_64 architecture detected. Downloading Miniforge for x86_64..."
@@ -59,11 +76,13 @@ if [[ "$conda_installed" == "false" ]]; then
 
     elif [[ "$os_type" == "Linux" && "$architecture" == "aarch64" ]]; then
         echo "Linux on aarch64 architecture detected. Downloading Miniconda for aarch64..."
-        conda_install "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-aarch64.sh" "$HOME/miniconda3" "$HOME/miniconda3/etc/profile.d/conda.sh"
+        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh" "$HOME/miniforge3" "$HOME/miniforge3/etc/profile.d/conda.sh"
 
     else
         echo "Unsupported OS type or architecture for this script."
     fi
+    setup_conda_env
+
 else
     echo "Skipping Miniforge installation as Conda is already installed."
 fi
