@@ -1,0 +1,8 @@
+name: glue-gui
+channels:
+  - nanoporetech
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - openjdk=21.0.1
