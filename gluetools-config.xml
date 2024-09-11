@@ -46,14 +46,14 @@
 		</property>
 		<!-- tbl2ans-specific config -->
 		<property>
-      <name>gluetools.core.programs.tbl2asn.executable</name>
-      <!-- <value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools_compiling/bin/tbl2asn</value> --> 
+      			<name>gluetools.core.programs.tbl2asn.executable</name>
+     			<!-- <value>/Users/sandeep.kasaragod/miniforge3/envs/gluetools_compiling/bin/tbl2asn</value> --> 
 			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/mac.table2asn</value>
-    </property>
+    		</property>
 		<property>
-      <name>gluetools.core.programs.tbl2asn.temp.dir</name>
-      <value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/tbl2asn</value>
-    </property>
+      			<name>gluetools.core.programs.tbl2asn.temp.dir</name>
+      			<value>/Users/sandeep.kasaragod/task_dir/projects/gluetools/bin/tmp/tbl2asn</value>
+    		</property>
 		<!-- MAFFT-specific config -->
 		<property>
 			<name>gluetools.core.programs.mafft.executable</name>
