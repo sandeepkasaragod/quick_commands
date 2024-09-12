@@ -107,7 +107,7 @@ update_gluetools_config() {
         
         case "$tool_name" in
             "blastn")
-                sed -i.bak "s|<value>.blastn</value>|<value>$tool_path</value>|g" $config_file
+                sed -i.bak "s|<value>[^<]*[^t]blastn</value>|<value>$tool_path</value>|g" $config_file
                 sed -i.bak "s|<value>.*/blastfiles</value>|<value>$current_working_dir/blastfiles</value>|g" $config_file
                 sed -i.bak "s|<value>.*/blastdbs</value>|<value>$current_working_dir/blastdbs</value>|g" $config_file
                 ;;
