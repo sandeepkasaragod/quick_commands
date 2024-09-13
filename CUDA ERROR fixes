@@ -1,118 +1,77 @@
-#!/bin/bash
+    @FXML
+    private void importSQL(ActionEvent event) throws IOException {
+        String osType = getOsType(); // Assuming you have a method to get the OS type
+        System.out.println(osType);
 
-# Get the system architecture and OS type
-architecture=$(uname -m)
-os_type=$(uname)
+        String filePath = globalVariables.pwd + "/" + globalVariables.configDir + "/" + globalVariables.configFile;
+        Map<String, String> hash = loadConfigToHash(filePath);
+        String sqlDBPath = hash.get("db");
 
-# Check if conda is installed
-if command -v conda &> /dev/null
-then
-    conda_installed=true
-    echo "Conda is already installed."
-else
-    conda_installed=false
-    echo "Conda is not installed."
-fi
+        if (osType.equals("Mac") || osType.equals("Linux")) {
+            Platform.runLater(() -> cmdOutput.appendText("Executing MySQL commands, please wait...\n\n"));
 
-# Function to download and install Miniforge
-conda_install() {
-    local download_url=$1
-    local install_dir=$2
-    local conda_source=$3
-    local installer_name="conda_installer.sh"
+            new Thread(() -> {
+                try {
+                    // Use mysql_config_editor to securely store and access credentials
+                    String[] command = {
+                            "/bin/bash",
+                            "-c",
+                            "mysql --login-path=local -h localhost --force" // Using login-path to access credentials
+                    };
 
-    # Download the installer
-    echo "Downloading Miniforge from $download_url"
-    curl -L -o $installer_name $download_url
+                    ProcessBuilder processBuilder = new ProcessBuilder(command);
+                    processBuilder.redirectErrorStream(true); // Merge stdout and stderr
 
-    # Make the installer executable
-    chmod +x $installer_name
+                    Process process = processBuilder.start();
 
-    # Run the installer
-    # echo "Running the installer..."
-    bash $installer_name -b -p $install_dir
+                    // Handle input/output streams
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-    # Initialize conda
-    source $conda_source
-    conda init
+                    // Send SQL commands after authentication, all at once
+                    String[] sqlCommands = {
+                            "DROP DATABASE IF EXISTS GLUE_TOOLS;",
+                            "DROP USER IF EXISTS 'gluetools'@'localhost';",
+                            "CREATE USER 'gluetools'@'localhost' IDENTIFIED BY 'Password123#@!';",
+                            "CREATE DATABASE GLUE_TOOLS CHARACTER SET UTF8;",
+                            "GRANT ALL PRIVILEGES ON GLUE_TOOLS.* TO 'gluetools'@'localhost';",
+                            "USE GLUE_TOOLS;",
+                            "SOURCE " + sqlDBPath + ";"
+                    };
 
-    if command -v conda &> /dev/null
-    then
-        echo "Conda initialized successfully."
-    else
-        echo "Failed to initialize Conda."
-    fi
-}
+                    for (String sqlCommand : sqlCommands) {
+                        writer.write(sqlCommand + "\n");
+                        writer.flush();
+                    }
 
-setup_conda_env() {
-    # Add bioconda and conda-forge channels
-    echo "Adding conda channels: conda-forge, bioconda"
-    conda config --add channels conda-forge
-    conda config --add channels bioconda
-    conda config --add channels defaults
+                    writer.close(); // Close the output stream when done sending commands
 
-    # Create the conda environment from the YAML file
-    if [[ -f "gluetools.yml" ]]; then
-        echo "Creating conda environment from gluetools.yml"
-        conda env create -f gluetools.yml
-    else
-        echo "Error: gluetools.yml file not found."
-    fi
-}
+                    // Start reading the MySQL output and displaying it in real-time
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        String finalLine = line;
+                        Platform.runLater(() -> cmdOutput.appendText(finalLine + "\n"));
+                    }
 
+                    reader.close(); // Close the reader when done
 
-activate_gluetools_and_get_paths() {
-    # Check if the gluetools environment exists
-    if conda env list | grep -q 'gluetools'; then
-        echo "Activating the gluetools environment."
-        source "$(conda info --base)/etc/profile.d/conda.sh"
-        conda activate gluetools
+                    // Wait for process to exit and capture exit code
+                    int exitCode = process.waitFor();
+                    if (exitCode != 0) {
+                        Platform.runLater(() -> cmdOutput.appendText("MySQL exited with error code: " + exitCode + "\n"));
+                    } else {
+                        Platform.runLater(() -> cmdOutput.appendText("MySQL commands executed successfully.\n"));
+                    }
 
-        # List the tools to check
-        local tools=("blast" "mafft" "raxml")
+                } catch (IOException | InterruptedException e) {
+                    e.printStackTrace();
+                    Platform.runLater(() -> cmdOutput.appendText("An error occurred: " + e.getMessage() + "\n"));
+                }
+            }).start();
+        } else {
+            Platform.runLater(() -> alertmsg("Error", "Unsupported OS", "This workflow only supports Mac and Linux.", ""));
+        }
+    }
 
-        for tool in "${tools[@]}"; do
-            tool_path=$(command -v $tool)
-            if [[ -n "$tool_path" ]]; then
-                echo "$tool is installed at: $tool_path"
-            else
-                echo "$tool is not installed in the gluetools environment."
-            fi
-        done
-
-        # Deactivate the environment after use
-        conda deactivate
-    else
-        echo "The gluetools environment is not found."
-    fi
-}
-
-
-if [[ "$conda_installed" == "false" ]]; then
-    if [[ "$os_type" == "Darwin" && "$architecture" == "arm64" ]]; then
-        echo "macOS on ARM architecture detected. Downloading Miniforge for ARM64..."
-        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-arm64.sh" "$HOME/miniforge3" "$HOME/miniforge/etc/profile.d/conda.sh"
-
-    elif [[ "$os_type" == "Darwin" && "$architecture" == "x86_64" ]]; then
-        echo "macOS on x86_64 architecture detected. Downloading Miniforge for x86_64..."
-        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-MacOSX-x86_64.sh" "$HOME/miniforge3" "$HOME/miniforge/etc/profile.d/conda.sh"
-
-    elif [[ "$os_type" == "Linux" && "$architecture" == "x86_64" ]]; then
-        echo "Linux on x86_64 architecture detected. Downloading Miniforge for x86_64..."
-        conda_install "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh" "$HOME/miniconda3" "$HOME/miniconda3/etc/profile.d/conda.sh"
-
-    elif [[ "$os_type" == "Linux" && "$architecture" == "aarch64" ]]; then
-        echo "Linux on aarch64 architecture detected. Downloading Miniconda for aarch64..."
-        conda_install "https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-aarch64.sh" "$HOME/miniforge3" "$HOME/miniforge3/etc/profile.d/conda.sh"
-
-    else
-        echo "Unsupported OS type or architecture for this script."
-    fi
-    setup_conda_env
-
-else
-    echo "Skipping installation as Conda is already installed."
-fi
-
-activate_gluetools_and_get_paths
-
+# add here to README
+#    mysql_config_editor set --login-path=local --host=localhost --user=root --password
