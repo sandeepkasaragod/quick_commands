@@ -1,4 +1,10 @@
-    @FXML
+SELECT create_time
+FROM information_schema.tables
+WHERE table_schema = 'GLUE_TOOLS'
+ORDER BY create_time ASC
+LIMIT 1;
+
+@FXML
     private void importSQL(ActionEvent event) throws IOException {
         String osType = getOsType(); // Assuming you have a method to get the OS type
         System.out.println(osType);
