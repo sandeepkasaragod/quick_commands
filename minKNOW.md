@@ -10,3 +10,5 @@ apt install ont-standalone-minknow-release
 
 
 apt update && apt list --upgradable
+
+apt upgrade -y
