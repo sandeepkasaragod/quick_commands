@@ -7,3 +7,6 @@ echo "deb http://cdn.oxfordnanoportal.com/apt focal-stable non-free" | sudo tee 
 apt update
 
 apt install ont-standalone-minknow-release
+
+
+apt update && apt list --upgradable
